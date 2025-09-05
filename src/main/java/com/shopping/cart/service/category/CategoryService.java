@@ -30,15 +30,13 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
-    public Category addCategory(CategoryDTO categoryDTO) {
-        Category category =  categoryRepository.findByName(categoryDTO.getName());
+    public Category addCategory(Category cat) {
+        Category category =  categoryRepository.findByName(cat.getName());
         if(category!=null){
             return category;
         }
         category = new Category();
-        category.setId(categoryDTO.getId());
-        category.setName(categoryDTO.getName());
-        category.setProducts(categoryDTO.getProducts());
+        category.setName(category.getName());
         return categoryRepository.save(category);
     }
 
