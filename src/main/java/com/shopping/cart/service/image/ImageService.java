@@ -7,10 +7,13 @@ import com.shopping.cart.model.Product;
 import com.shopping.cart.repository.ImageRepository;
 import com.shopping.cart.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +69,14 @@ public class ImageService implements IImageService{
 
     @Override
     public Image updateImage(MultipartFile file, Long id) {
+        Image image = getImageById(id);
+        try{
+            image.setFileName(file.getOriginalFilename());
+            image.setFileType(file.getContentType());
+            image.setImage(new SerialBlob(file.getBytes()));
+        }catch (IOException | SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
         return null;
     }
 }
