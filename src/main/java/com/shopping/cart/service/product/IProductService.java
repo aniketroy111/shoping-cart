@@ -2,21 +2,25 @@ package com.shopping.cart.service.product;
 
 import com.shopping.cart.dto.ProductDTO;
 import com.shopping.cart.model.Product;
+import com.shopping.cart.request.ProductUpdateRequest;
 
 import java.util.List;
 
 public interface IProductService {
 
-    Product addProduct(ProductDTO productDTO);
-    Product getProductById(Long id);
+    ProductDTO addProduct(ProductDTO productDTO);
+    Product findProductById(Long id);
     void deleteProduct(Long id);
-    void updateProduct(ProductDTO productDTO,Long productId);
+    ProductDTO updateProduct(ProductUpdateRequest request, Long productId);
 
-    List<Product> getAllProducts();
-    List<Product> getProductByCategory(String category);
-    List<Product> getProductByBrand(String brand);
-    List<Product> getProductByCategoryAndBrand(String category,String brand);
-    List<Product> getProductByName(String name);
-    List<Product> getProductByBrandName(String brand,String name);
+    List<ProductDTO> getAllProducts();
+    List<ProductDTO> getProductByCategory(String category);
+    List<ProductDTO> getProductByBrand(String brand);
+    List<ProductDTO> getProductByCategoryAndBrand(String category,String brand);
+    List<ProductDTO> getProductByName(String name);
+    List<ProductDTO> getProductByBrandName(String brand,String name);
 
+    List<ProductDTO> convertToProductListToDtoList(List<Product> products);
+
+    ProductDTO convertToDto(Product product);
 }

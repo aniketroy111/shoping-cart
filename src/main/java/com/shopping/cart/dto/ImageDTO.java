@@ -7,5 +7,5 @@ public class ImageDTO {
 
     Long id;
     String imageName;
-    String downloadUrl;
+    String downloadedUrl;
 }

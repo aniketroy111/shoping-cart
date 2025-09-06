@@ -1,6 +1,7 @@
 package com.shopping.cart.service.image;
 
 import com.shopping.cart.dto.ImageDTO;
+import com.shopping.cart.dto.ProductDTO;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Image;
 import com.shopping.cart.model.Product;
@@ -31,7 +32,7 @@ public class ImageService implements IImageService{
 
     @Override
     public List<ImageDTO> saveImages(List<MultipartFile> files, Long id) {
-        Product product = productService.getProductById(id);
+        Product product = productService.findProductById(id);
         List<ImageDTO> saveImageDTOS = new ArrayList<>();
         try {
             for (MultipartFile file : files){
@@ -51,7 +52,7 @@ public class ImageService implements IImageService{
                 ImageDTO imageDTO = new ImageDTO();
                 imageDTO.setId(saveImage.getId());
                 imageDTO.setImageName(saveImage.getFileName());
-                imageDTO.setDownloadUrl(saveImage.getDownloadedUrl());
+                imageDTO.setDownloadedUrl(saveImage.getDownloadedUrl());
 
                 saveImageDTOS.add(imageDTO);
             }

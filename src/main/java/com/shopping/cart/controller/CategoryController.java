@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("${api.prefix}/categories")
+@RequestMapping("${api.prefix}/")
 @AllArgsConstructor
 public class CategoryController {
 
@@ -54,7 +54,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<ApiResponse> getCategoryById(@PathVariable String name){
+    public ResponseEntity<ApiResponse> getCategoryByname(@PathVariable String name){
         try {
             Category category = categoryService.getCategoryByName(name);
             return ResponseEntity.ok(new ApiResponse("Fetch Successfully",category));
