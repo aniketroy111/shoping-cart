@@ -1,6 +1,5 @@
 package com.shopping.cart.request;
 
-import com.shopping.cart.dto.ImageDTO;
 import com.shopping.cart.model.Category;
 import com.shopping.cart.model.Image;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.shopping.cart.controller;
 
 import com.shopping.cart.Response.ApiResponse;
-import com.shopping.cart.dto.ImageDTO;
+import com.shopping.cart.dto.ImageDto;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Image;
 import com.shopping.cart.service.image.ImageService;
@@ -29,7 +29,7 @@ public class ImageController {
     @PostMapping("/upload")
     public ResponseEntity<ApiResponse> saveImages(@RequestParam List<MultipartFile> files, @RequestParam Long productId){
         try{
-            List<ImageDTO> imageDTOS = imageService.saveImages(files,productId);
+            List<ImageDto> imageDTOS = imageService.saveImages(files,productId);
             return ResponseEntity.ok(new ApiResponse("Upload successfull",imageDTOS));
         }catch (Exception e){
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Upload failed",e.getMessage()));

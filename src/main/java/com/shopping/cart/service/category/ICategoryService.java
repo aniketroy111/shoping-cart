@@ -1,6 +1,6 @@
 package com.shopping.cart.service.category;
 
-import com.shopping.cart.dto.CategoryDTO;
+import com.shopping.cart.dto.CategoryDto;
 import com.shopping.cart.model.Category;
 
 import java.util.List;
@@ -12,5 +12,5 @@ public interface ICategoryService {
     List<Category> getAllCategory();
     Category addCategory(Category category);
     void deleteCategory(Long id);
-    Category updateCategory(CategoryDTO categoryDTO,Long id);
+    Category updateCategory(CategoryDto categoryDTO, Long id);
 }

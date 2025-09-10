@@ -1,7 +1,7 @@
 package com.shopping.cart.service.product;
 
-import com.shopping.cart.dto.ImageDTO;
-import com.shopping.cart.dto.ProductDTO;
+import com.shopping.cart.dto.ImageDto;
+import com.shopping.cart.dto.ProductDto;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Category;
 import com.shopping.cart.model.Image;
@@ -26,7 +26,7 @@ public class ProductService implements IProductService{
     private final ModelMapper modelMapper;
 
     @Override
-    public ProductDTO addProduct(ProductDTO productDTO) {
+    public ProductDto addProduct(ProductDto productDTO) {
 
         // check the product category already exist or not in DB
         // if yes then set as new product in that category
@@ -43,7 +43,7 @@ public class ProductService implements IProductService{
     }
 
 
-    private Product createProduct(ProductDTO productDTO) {
+    private Product createProduct(ProductDto productDTO) {
 
         Product product = new Product();
         BeanUtils.copyProperties(productDTO,product);
@@ -62,7 +62,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public ProductDTO updateProduct(ProductUpdateRequest request, Long productId) {
+    public ProductDto updateProduct(ProductUpdateRequest request, Long productId) {
 
         // check the requested product is exist or not in DB
         // if yes then update the product full or partial according to request
@@ -95,13 +95,13 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(this::convertToDto).toList();
     }
 
     @Override
-    public List<ProductDTO> getProductByCategory(String category) {
+    public List<ProductDto> getProductByCategory(String category) {
         List<Product> products = productRepository.findByCategoryName(category);
         if(products.isEmpty()){
             throw new ResourceNotFoundException("Product not found");
@@ -110,7 +110,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> getProductByBrand(String brand) {
+    public List<ProductDto> getProductByBrand(String brand) {
         List<Product> products = productRepository.findByBrand(brand);
         if(products.isEmpty()){
             throw new ResourceNotFoundException("Product not found");
@@ -119,7 +119,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> getProductByCategoryAndBrand(String category, String brand) {
+    public List<ProductDto> getProductByCategoryAndBrand(String category, String brand) {
         List<Product> products = productRepository.findByCategoryNameAndBrand(category,brand);
         if(products.isEmpty()){
             throw new ResourceNotFoundException("Product not found");
@@ -128,7 +128,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> getProductByName(String name) {
+    public List<ProductDto> getProductByName(String name) {
         List<Product> products = productRepository.findByName(name);
         if(products.isEmpty()){
             throw new ResourceNotFoundException("Product not found");
@@ -137,7 +137,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> getProductByBrandName(String brand, String name) {
+    public List<ProductDto> getProductByBrandName(String brand, String name) {
         List<Product> products= productRepository.findProductByBrandAndName(brand,name);
         if(products.isEmpty()){
             throw new ResourceNotFoundException("Product not found");
@@ -146,16 +146,16 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> convertToProductListToDtoList(List<Product> products){
+    public List<ProductDto> convertToProductListToDtoList(List<Product> products){
         return products.stream().map(this::convertToDto).toList();
     }
 
     @Override
-    public ProductDTO convertToDto(Product product){
-        ProductDTO productDTO = modelMapper.map(product,ProductDTO.class);
+    public ProductDto convertToDto(Product product){
+        ProductDto productDTO = modelMapper.map(product, ProductDto.class);
         List<Image> images = product.getImages();
         if(images !=null &&!images.isEmpty()){
-            List<ImageDTO> imageDTOs = images.stream().map(image -> modelMapper.map(image, ImageDTO.class)).toList();
+            List<ImageDto> imageDTOs = images.stream().map(image -> modelMapper.map(image, ImageDto.class)).toList();
             productDTO.setImages(imageDTOs);
         }
         return productDTO;

@@ -1,14 +1,12 @@
 package com.shopping.cart.service.image;
 
-import com.shopping.cart.dto.ImageDTO;
-import com.shopping.cart.dto.ProductDTO;
+import com.shopping.cart.dto.ImageDto;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Image;
 import com.shopping.cart.model.Product;
 import com.shopping.cart.repository.ImageRepository;
 import com.shopping.cart.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,9 +29,9 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public List<ImageDTO> saveImages(List<MultipartFile> files, Long id) {
+    public List<ImageDto> saveImages(List<MultipartFile> files, Long id) {
         Product product = productService.findProductById(id);
-        List<ImageDTO> saveImageDTOS = new ArrayList<>();
+        List<ImageDto> saveImageDTOS = new ArrayList<>();
         try {
             for (MultipartFile file : files){
                 Image image = new Image();
@@ -49,7 +47,7 @@ public class ImageService implements IImageService{
                 saveImage.setDownloadedUrl(buildDownloadUrl+saveImage.getId());
                 imageRepository.save(saveImage);
 
-                ImageDTO imageDTO = new ImageDTO();
+                ImageDto imageDTO = new ImageDto();
                 imageDTO.setId(saveImage.getId());
                 imageDTO.setImageName(saveImage.getFileName());
                 imageDTO.setDownloadedUrl(saveImage.getDownloadedUrl());

@@ -46,4 +46,10 @@ public class CartService implements ICartService{
         cart.setTotalAmount(BigDecimal.ZERO);
         return cartRepository.save(cart);
     }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId);
+    }
+
 }

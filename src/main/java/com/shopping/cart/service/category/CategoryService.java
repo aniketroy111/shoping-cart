@@ -1,6 +1,6 @@
 package com.shopping.cart.service.category;
 
-import com.shopping.cart.dto.CategoryDTO;
+import com.shopping.cart.dto.CategoryDto;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Category;
 import com.shopping.cart.repository.CategoryRepository;
@@ -46,7 +46,7 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
-    public Category updateCategory(CategoryDTO categoryDTO, Long id) {
+    public Category updateCategory(CategoryDto categoryDTO, Long id) {
         return Optional.ofNullable(getCategoryById(id)).map(oldCategory->{
             oldCategory.setName(categoryDTO.getName());
             return categoryRepository.save(oldCategory);

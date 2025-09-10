@@ -11,4 +11,5 @@ public interface ICartService {
     public void deleteCardById(Long id);
     public Cart clearCart(Long cartId);
     public Cart initializeNewCart();
+    Cart getCartByUserId(Long userId);
 }

@@ -2,7 +2,7 @@ package com.shopping.cart.controller;
 
 
 import com.shopping.cart.Response.ApiResponse;
-import com.shopping.cart.dto.CategoryDTO;
+import com.shopping.cart.dto.CategoryDto;
 import com.shopping.cart.exceptions.ResourceAlreadyExistException;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Category;
@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.AlreadyBoundException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -74,7 +73,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ApiResponse> updateCategory(@PathVariable Long id,@RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<ApiResponse> updateCategory(@PathVariable Long id,@RequestBody CategoryDto categoryDTO){
         try {
             Category updateCategory = categoryService.updateCategory(categoryDTO,id);
             return ResponseEntity.ok(new ApiResponse("Updated Successfully",updateCategory));
