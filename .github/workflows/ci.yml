@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main ]   # runs when you push to main branch
+    branches: [ master ]   # runs when you push to main branch
 
 
 jobs:
