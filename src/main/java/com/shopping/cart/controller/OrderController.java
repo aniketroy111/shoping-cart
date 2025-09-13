@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -24,6 +26,16 @@ public class OrderController {
             return ResponseEntity.ok(new ApiResponse("Fetch order",orderDto));
         } catch (Exception e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
+        }
+    }
+
+    @GetMapping("/{userId}/order-of-user")
+    public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId){
+        try {
+            List<OrderDto> orderDtos = orderService.getUserOrders(userId);
+            return ResponseEntity.ok(new ApiResponse("Order fetch successfully",orderDtos));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),null));
         }
     }
 
