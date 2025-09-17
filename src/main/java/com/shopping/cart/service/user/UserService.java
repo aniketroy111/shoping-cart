@@ -1,5 +1,6 @@
 package com.shopping.cart.service.user;
 
+import com.shopping.cart.dto.UserDto;
 import com.shopping.cart.exceptions.ResourceAlreadyExistException;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.User;
@@ -7,6 +8,7 @@ import com.shopping.cart.repository.UserRepository;
 import com.shopping.cart.request.CreateUserRequest;
 import com.shopping.cart.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class UserService implements IUserService{
 
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public User getUserById(Long id) {
@@ -25,7 +28,7 @@ public class UserService implements IUserService{
     @Override
     public User createUser(CreateUserRequest userRequest) {
        return Optional.of(userRequest)
-               .filter(user -> !userRepository.existByEmail(userRequest.getEmail()))
+               .filter(user -> !userRepository.existsByEmail(userRequest.getEmail()))
                .map(req ->{
                    User user = new User();
                    user.setId(req.getId());
@@ -49,5 +52,9 @@ public class UserService implements IUserService{
     @Override
     public void deleteUser(Long id) {
         userRepository.findById(id).ifPresentOrElse(userRepository::delete,()->{ throw new ResourceNotFoundException("User not found");});
+    }
+    @Override
+    public UserDto convertToDto(User user){
+        return modelMapper.map(user, UserDto.class);
     }
 }

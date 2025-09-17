@@ -2,6 +2,7 @@ package com.shopping.cart.controller;
 
 import com.shopping.cart.Response.ApiResponse;
 import com.shopping.cart.dto.OrderDto;
+import com.shopping.cart.model.Order;
 import com.shopping.cart.service.order.IOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +40,11 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/{userId}/order-place")
+    @PostMapping("/{userId}/order")
     public ResponseEntity<ApiResponse> placeOrder(@PathVariable Long userId){
         try {
-            OrderDto orderDto = orderService.placeOrder(userId);
-            return ResponseEntity.ok(new ApiResponse("Order place success",orderDto));
+            Order order = orderService.placeOrder(userId);
+            return ResponseEntity.ok(new ApiResponse("Order place success",orderService.convertToDto(order)));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),null));
         }

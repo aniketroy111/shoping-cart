@@ -10,6 +10,7 @@ import com.shopping.cart.service.cart.ICartService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,8 +27,9 @@ public class OrderService implements IOrderService{
     private final ModelMapper modelMapper;
 
 
+    @Transactional
     @Override
-    public OrderDto placeOrder(Long userId) {
+    public Order placeOrder(Long userId) {
         // get cart by user
         Cart cart = cartService.getCartByUserId(userId);
         // create the order by above cart
@@ -41,8 +43,9 @@ public class OrderService implements IOrderService{
 
         Order savedOrder = orderRepository.save(order);
         // after order complete clear the cart
-        cartService.clearCart(cart.getId());
-        return convertToDto(order);
+        Cart cart1 = cartService.clearCart(cart.getId());
+
+        return order;
     }
 
     private Order createOrder(Cart cart){
@@ -84,7 +87,8 @@ public class OrderService implements IOrderService{
         return orderRepository.findById(orderId).map(this::convertToDto).orElseThrow(()-> new ResourceNotFoundException("Order not found"));
     }
 
-    private OrderDto convertToDto(Order order){
+    @Override
+    public OrderDto convertToDto(Order order){
         return modelMapper.map(order,OrderDto.class);
     }
 

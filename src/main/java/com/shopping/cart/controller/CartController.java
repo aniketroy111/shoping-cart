@@ -1,6 +1,7 @@
 package com.shopping.cart.controller;
 
 import com.shopping.cart.Response.ApiResponse;
+import com.shopping.cart.dto.CartDto;
 import com.shopping.cart.exceptions.ResourceNotFoundException;
 import com.shopping.cart.model.Cart;
 import com.shopping.cart.service.cart.ICartService;
@@ -21,7 +22,7 @@ public class CartController {
     public ResponseEntity<ApiResponse> getCartById(@PathVariable Long cartId){
         try {
             Cart cart = cartService.getCartById(cartId);
-            return ResponseEntity.ok(new ApiResponse("Fetched Successfully",cart));
+            return ResponseEntity.ok(new ApiResponse("Fetched Successfully",cartService.convertToDto(cart)));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }
@@ -42,7 +43,7 @@ public class CartController {
     public ResponseEntity<ApiResponse> clearCart(@PathVariable Long cartId){
         try {
             Cart cart = cartService.clearCart(cartId);
-            return ResponseEntity.ok(new ApiResponse("Clear Successfully",cart));
+            return ResponseEntity.ok(new ApiResponse("Clear Successfully",cartService.convertToDto(cart)));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }
